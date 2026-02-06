@@ -95,10 +95,34 @@ const handleDeleteStudent = (id) => {
             {students.map(student => (
               <li key={student.id} style={{ background: "#f0f8ff", padding: "10px", marginBottom: "10px", borderRadius: "5px" }}>
                 <strong>{student.firstName} {student.lastName}</strong>
+
+
+<button 
+        onClick={() => handleDeleteStudent(student.id)}
+        style={{
+            backgroundColor: "red",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            padding: "5px 5px",
+            cursor: "pointer",
+            marginLeft: "5px"
+        }}
+    >
+        Ta bort 🗑️
+    </button>
+
+
+
               </li>
             ))}
           </ul>
         </div>
+
+
+
+
+
 
 
 {courses.map(course => (
