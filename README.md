@@ -35,6 +35,6 @@ Ensure your Backend server (.NET API) is running.
 Open a terminal in the project folder (`FRONTEND-APP` or `frontend-react-app`) and run:
 
 ##  git bash i Terminal
-npm install
-npm start
-after npm start choose Y , and Frontend its open in a webbsite.
+npm install,
+npm start,
+after npm start, choose Y , and Frontend its open in a webbsite.
