@@ -28,7 +28,7 @@ To run the application locally, follow these steps:
 
 ### 1. Prepare the Backend
 Ensure your Backend server (.NET API) is running.
-* **Important:** The frontend code expects the backend to run on **https://localhost:7005**.
+* **Important:** The frontend code expects the backend to run on **https://localhost:7005/swagger**.
 * If your backend runs on a different port, please adjust the URLs in `src/App.js`.
 
 ### 2. Install Dependencies
