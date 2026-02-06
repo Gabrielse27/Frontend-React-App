@@ -37,4 +37,4 @@ Open a terminal in the project folder (`FRONTEND-APP` or `frontend-react-app`) a
 ##  git bash i Terminal
 npm install,
 npm start,
-after npm start, choose Y , and Frontend its open in a webbsite.
+after npm start, choose Y , and Frontend its open in a webbsite. Localhost  http://localhost:3001/
