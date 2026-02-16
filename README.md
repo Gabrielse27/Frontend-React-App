@@ -2,7 +2,7 @@
 
 This is the frontend application for the School Management System. It is built with **React** and communicates with a .NET Web API to handle data.
 
-The project includes features to list students and courses, delete students, and a simulated payment solution ("Klarna demo") for purchasing courses.
+The project includes features to list students and courses, delete student. The project includes that a student can choose more courses.
 
 ##  Features
 
@@ -11,8 +11,8 @@ The project includes features to list students and courses, delete students, and
     * Ability to delete a student (includes a confirmation dialog).
 * **Course Management:**
     * Lists available courses with descriptions.
-    * **Purchase Function:** A simulated checkout displaying a "Demo" Klarna popup with loading status and confirmation.
-* **Design:** Responsive layout divided into two columns (Students & Courses).
+    * **Coose Function:** A simulated checkout displaying a popup with loading status and confirmation when we choose a student who choose a course.
+* **Design:** Responsive layout divided into two columns Students & Courses.
 
 ## Technologies
 
