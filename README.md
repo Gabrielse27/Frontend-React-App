@@ -8,10 +8,12 @@ The project includes features to list students and courses, delete student. The 
 
 * **Student Management:**
     * Lists all students from the database.
-    * Ability to delete a student (includes a confirmation dialog).
+    * Ability to delete a student includes a confirmation dialog.
 * **Course Management:**
     * Lists available courses with descriptions.
-    * **Coose Function:** A simulated checkout displaying a popup with loading status and confirmation when we choose a student who choose a course.
+    
+  **Choose Function:** A simulated checkout displaying a popup with loading status and confirmation when we choose a student who choose a course or more courses.
+
 * **Design:** Responsive layout divided into two columns Students & Courses.
 
 ## Technologies
