@@ -5,13 +5,9 @@ function App() {
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]); 
   
-  // NYTT: Vi måste hålla reda på VEM som handlar!
   const [selectedStudentId, setSelectedStudentId] = useState(null);
-
-  // Lådor för Klarna-popupen
-  const [processingPayment, setProcessingPayment] = useState(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-
+  const [processingRegistrering,setProcessingRegistrering] = useState(false);
+  const [registreringSuccess, setRegistreringSuccess ] = useState(false);
 
   // --- 2. HÄMTA DATA (Backend) ---
   useEffect(() => {
@@ -29,8 +25,8 @@ function App() {
   }, []);
 
 
-  // --- 3. FUNKTION FÖR ATT KÖPA (Nu kopplad till Backend!) ---
-  const handleBuyCourse = (courseId) => {
+  
+  const handleRegisterCourse = (courseId) => {
     
     // Har användaren valt en student?
     if (selectedStudentId === null) {
@@ -38,8 +34,9 @@ function App() {
         return;
     }
 
-    // Starta "Klarna"-animationen
-    setProcessingPayment(true);
+    
+    
+    setProcessingRegistrering(true);
     
     // ANROPA BACKEND (POST /api/enrollments)
     const url = `https://localhost:7005/api/enrollments?studentId=${selectedStudentId}&courseId=${courseId}`;
@@ -48,17 +45,23 @@ function App() {
       .then(response => {
           if(response.ok) {
               // Om det gick bra:
-              setProcessingPayment(false);
-              setPaymentSuccess(true);
-              setTimeout(() => setPaymentSuccess(false), 3000); // Dölj rutan efter 3 sek
+              setProcessingRegistrering(false);
+              setRegistreringSuccess(true);
+              setTimeout(() => setRegistreringSuccess(false), 3000); // Stäng poppupen efter 3 sekunder
+              
+              
+fetch('https://localhost:7005/api/students')
+    .then(res => res.json())
+    .then(data => setStudents(data));
+              
           } else {
-              alert("Något gick fel vid köpet!");
-              setProcessingPayment(false);
+              alert("Något gick fel vid registreringen!");
+              setProcessingRegistrering(false);
           }
       })
       .catch(err => {
           console.error(err);
-          setProcessingPayment(false);
+          setProcessingRegistrering(false);
       });
   }
 
@@ -87,15 +90,24 @@ function App() {
     borderRadius: "10px", textAlign: "center", zIndex: 1000, border: "2px solid #FFB3C7"
   };
 
+
+const [selectedCity, setSelectedCity] = useState("Alla");
+const uniqueCities = ["Alla", ...new Set(courses.map(course => course.location))];
+const filteredCourses = selectedCity === "Alla" ? courses : courses.filter(course => course.location === selectedCity);
+
+
+
+
+
   return (
     <div style={{ padding: "20px", fontFamily: "Arial", maxWidth: "1400px", margin: "0 auto" }}>
       
       <h1 style={{ textAlign: "center", color: "#333" }}>Min Skola Dashboard</h1>
 
-      {/* Info-text så man fattar hur man gör */}
+      
       <p style={{textAlign: "center", color: "#666"}}>
         1. Klicka på en student ("Välj"). <br/>
-        2. Klicka på "Köp" vid en kurs.
+        2. Klicka på "Registrera Kurs" vid en kurs.
       </p>
 
       <div style={{ display: "flex", gap: "50px", marginTop: "30px" }}>
@@ -114,7 +126,25 @@ function App() {
                       display: "flex", justifyContent: "space-between", alignItems: "center"
                   }}>
                 
-                <span>{student.firstName} {student.lastName}</span>
+<div>
+    <span style={{ fontWeight: "bold", fontSize: "1.1em" }}>
+        {student.firstName} {student.lastName}
+    </span>
+    
+    {/* Här kollar vi om studenten har några kurser, och ritar ut dem! */}
+    {student.courses && student.courses.length > 0 ? (
+        <ul style={{ fontSize: "0.85em", color: "#555", marginTop: "5px", paddingLeft: "20px" }}>
+            {student.courses.map((course, index) => (
+                <li key={index}>{course}</li>
+            ))}
+        </ul>
+    ) : (
+        <div style={{ fontSize: "0.8em", color: "#999", marginTop: "5px", fontStyle: "italic" }}>
+            Inga kurser registrerade
+        </div>
+    )}
+</div>
+
 
                 <div>
                     {/* KNAPP FÖR ATT VÄLJA STUDENT */}
@@ -138,24 +168,53 @@ function App() {
         </div>
 
         {/* --- HÖGER: KURSER --- */}
-        <div style={{ flex: 2 }}> {/* Lite bredare för kurserna */}
+        <div style={{ flex: 2 }}> 
             <h2 style={{ color: "green" }}>Tillgängliga Kurser 📚</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "20px" }}>
+
+
+
+<div style={{ marginBottom: "20px" }}>
+        <label style={{ marginRight: "10px", fontWeight: "bold" }}>Filtrera på stad:</label>
+        <select 
+            value={selectedCity} 
+            onChange={(e) => setSelectedCity(e.target.value)}
+            style={{ padding: "8px", borderRadius: "5px" }}
+        >
+            {uniqueCities.map((city, index) => (
+                <option key={index} value={city}>
+                    {city}
+                </option>
+            ))}
+        </select>
+    </div>
+
+
+
+
+
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "10px" }}>
                 
-                {courses.map(course => (
+                {filteredCourses.map(course => (
                     <div key={course.id} style={{ padding: "20px", border: "1px solid #ddd", borderRadius: "8px", boxShadow: "2px 2px 10px #eee" }}>
                         
-                        <h3>{course.title}</h3>
+                        <h3>{course.title}
+                          {course.location && (
+        <span style={{ fontSize: "0.8em", color: "gray", marginLeft: "8px" }}>
+            ({course.location})
+        </span>
+    )}
+                        </h3>
                         <p style={{color: "#555"}}>{course.description}</p>
                         
-                        {/* KÖP KNAPPEN */}
+                      
                         <button 
                             // OBS: Nu skickar vi med ID (course.id) istället för namn!
-                            onClick={() => handleBuyCourse(course.id)}
+                            onClick={() => handleRegisterCourse(course.id)}
                             style={{
-                                backgroundColor: "#6bee94", // Klarna-rosa
-                                border: "none", padding: "10px 20px", borderRadius: "6px",
-                                fontWeight: "bold", cursor: "pointer", width: "100%"
+                                backgroundColor: "#13e87a", 
+                                border: "none", padding: "10px 30px", borderRadius: "6px",
+                                fontWeight: "bold", cursor: "pointer", width: "100%", 
                             }}
                         >
                             Registrera Kurs
@@ -169,16 +228,8 @@ function App() {
 
       </div>
 
-      {/* --- POPUPS --- */}
-      {processingPayment && (
-          <div style={popupStyle}>
-              <div style={{fontSize: "30px"}}>⏳</div>
-              <h3>Kontaktar Klarna...</h3>
-              <p>Vad god vänta tills vi behandlar din betalning !!...</p>
-          </div>
-      )}
 
-      {paymentSuccess && (
+      {registreringSuccess && (
           <div style={popupStyle}>
               <div style={{fontSize: "30px"}}>✅</div>
               <h3>Studenten är Godkänt!</h3>
