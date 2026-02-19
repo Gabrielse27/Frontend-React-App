@@ -1,5 +1,6 @@
  import React, { useState, useEffect } from 'react';
 
+
 function App() {
   // --- 1. LÅDOR FÖR DATA (State) ---
   const [students, setStudents] = useState([]);
