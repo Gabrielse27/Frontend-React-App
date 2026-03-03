@@ -4,17 +4,29 @@ This is the frontend application for the School Management System. It is built w
 
 The project includes features to list students and courses, delete student. The project includes that a student can choose more courses.
 
+### Information about to delete a specific course from a student.
+You can remove a specific course from a student directly in the frontend but from backend , SQl Server Object Explorer, from file dbo.Enrollment.
+In Swagger we can see Id for student and Id for courses ,that we know what student and what specific course we want to delete.
+Every course have a teacher, who can be removed or updated in a specific course in backend in Sql Server Object Explorer, from file dbo.Courses
+
 ## Features
 
 - **Student Management:**
   - Lists all students from the database.
   - Ability to delete a student includes a confirmation dialog.
+  - We can delete a student and all of their selected courses directly from the frontend if you change your mind after registration. When a student is removed via the frontend,  all of their associated course enrollments are automatically deleted as well.
+  - 
 - **Course Management:**
   - Lists available courses with descriptions.
+  - The application includes a filtering feature that allows users to easily sort and find available courses based on their specific city.
+  - Show the date time yyyy-mm-dd when a course is registered.
 
   **Choose Function:** A simulated checkout displaying a popup with loading status and confirmation when we choose a student who choose a course or more courses.
 
 - **Design:** Responsive layout divided into two columns Students & Courses.
+
+- ### Testing
+    A frontend test has been implemented using React Testing Library to verify that the main dashboard renders correctly. The test passes successfully.
 
 ## Technologies
 
@@ -45,6 +57,7 @@ npm install,
 npm start,
 after npm start, choose Y , and Frontend its open in a webbsite. Localhost http://localhost:3001/
 
-##
+####  Övrigt Info
 
 I Git-historiken från den 6 februari finns ett commit-meddelande som nämner ett "simulated Klarna payment flow". Jag experimenterade med att bygga den funktionen under utvecklingen, men valde senare att plocka bort koden igen för att hålla projektet renare och mer fokuserat på inlämningskraven.
+
