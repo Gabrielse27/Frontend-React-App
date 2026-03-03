@@ -206,6 +206,12 @@ const filteredCourses = selectedCity === "Alla" ? courses : courses.filter(cours
         </span>
     )}
                         </h3>
+                {/*   Här är koden för läraren*/} 
+                    <p style={{ fontWeight: "bold", color: "#444", margin: "5px 0", backgroundColor: "#f9f9f9", padding: "5px", borderRadius: "5px" }}>
+             Lärare: {course.teacher ? course.teacher.name : "Ej tilldelad"}
+        </p>
+
+
                         <p style={{color: "#555"}}>{course.description}</p>
                         
                       
